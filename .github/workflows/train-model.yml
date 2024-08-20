@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Install pip
+        run: |
+          apt-get install python-pip
       - name: Install dependencies
         run: |
           pip install torch==2.4.0 torchvision==0.15.0
