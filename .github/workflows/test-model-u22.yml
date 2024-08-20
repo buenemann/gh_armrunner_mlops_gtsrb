@@ -1,4 +1,4 @@
-name: Test Model
+name: Test Model u22
 
 on:
   workflow_run:
