@@ -8,7 +8,7 @@ on:
 
 jobs:
   test-model:
-    runs-on: linux-arm64-runner # Custom ARM64 runner
+    runs-on: linux-arm-runner # Custom ARM64 runner
     name: Test the Model
     steps:
       - name: Checkout code
