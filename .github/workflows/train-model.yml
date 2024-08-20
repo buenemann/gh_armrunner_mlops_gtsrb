@@ -7,7 +7,7 @@ on:
 
 jobs:
   train-model:
-    runs-on: ubuntu-22.04-arm # Custom ARM64 runner
+    runs-on: linux-arm-runner # Custom ARM64 runner
     name: Train the Model
     steps:
       - name: Checkout code
