@@ -2,7 +2,7 @@ name: Test Model u22
 
 on:
   workflow_run:
-    workflows: ["Train Model u22"]
+    workflows: ["Train Model"]
     types:
       - completed
 
