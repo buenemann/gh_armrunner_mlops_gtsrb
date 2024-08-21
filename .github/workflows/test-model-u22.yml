@@ -17,8 +17,6 @@ jobs:
       - name: Install dependencies
         run: |
           pip install torch==2.4.0 torchvision==0.15.0
-      - name: Create folder
-        run: |
-          mkdir scripts/models
+
       - name: Run testing script
         run: python scripts/test_model.py
