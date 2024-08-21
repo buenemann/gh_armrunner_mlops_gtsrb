@@ -18,7 +18,7 @@ jobs:
           echo "apt get update"
           sudo apt-get update
           echo "pip3 install"
-          sudo apt install python3-pip
+          sudo apt install -y python3-pip
       - name: Install dependencies
         run: |
           pip install torch==2.4.0 torchvision==0.15.0
