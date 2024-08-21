@@ -14,10 +14,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4 # Latest version
       - name: Install pip3
-        run: |
+        run:
+          sudo apt-get update
           sudo apt install python3-pip
       - name: Install dependencies
-        run: |
+        run:
           pip install torch==2.4.0 torchvision==0.15.0
 
       - name: Run testing script
