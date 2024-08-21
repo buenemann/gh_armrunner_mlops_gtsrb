@@ -15,7 +15,9 @@ jobs:
         uses: actions/checkout@v4 # Latest version
       - name: Install pip3
         run: |
+          echo "apt get update"
           sudo apt-get update
+          echo "pip3 install"
           sudo apt install python3-pip
       - name: Install dependencies
         run: |
