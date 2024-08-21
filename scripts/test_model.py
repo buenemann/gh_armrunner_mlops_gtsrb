@@ -24,7 +24,7 @@ class TrafficSignNet(nn.Module):
 
 # Load the model
 model = TrafficSignNet()
-model.load_state_dict(torch.load('./models/traffic_sign_net.pth'))
+model.load_state_dict(torch.load('./scripts/models/traffic_sign_net.pth'))
 model.eval()
 
 # Define transformations for the testing data
