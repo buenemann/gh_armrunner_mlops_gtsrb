@@ -69,4 +69,4 @@ for epoch in range(num_epochs):
 
 print('Finished Training')
 
-torch.save(model.state_dict(), './scripts/models/traffic_sign_net.pth')
+torch.save(model.state_dict(), './models/traffic_sign_net.pth')
