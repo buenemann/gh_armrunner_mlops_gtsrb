@@ -1,0 +1,49 @@
+name: Deploy to Azure Container Apps
+
+on:
+  workflow_run:
+    workflows: ["Test Model"]
+    types:
+      - completed
+
+jobs:
+  deploy-to-dockerhub:
+    runs-on: ubuntu-22.04-arm-os
+    name: Build and Push Docker Image to DockerHub
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        run: |
+          docker buildx build --platform linux/arm64 -t your-username/your-image-name:latest --push .
+  
+  deploy-to-azure:
+    runs-on: ubuntu-22.04
+    needs: deploy-to-dockerhub
+    name: Deploy to Azure Container Apps
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Container Apps
+        run: |
+          az containerapp create  --name your-container-app-name \
+                                  --resource-group your-resource-group \
+                                  --image your-username/your-image-name:latest \
+                                  --environment your-env-name \
+                                  --cpu 0.5 --memory 1.0Gi \
+                                  --ingress 'external' --target-port 8000 \
+                                  --query "properties.configuration.ingress.fqdn"
+
