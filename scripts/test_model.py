@@ -24,7 +24,7 @@ class TrafficSignNet(nn.Module):
 
 # Load the model
 model = TrafficSignNet()
-model.load_state_dict(torch.load('./scripts/models/traffic_sign_net.pth'))
+model.load_state_dict(torch.load('./models/traffic_sign_net.pth'))
 model.eval()
 
 # Define transformations for the testing data
@@ -35,8 +35,7 @@ transform = transforms.Compose([
 ])
 
 # Load the GTSRB test dataset
-test_set = torchvision.datasets.GTSRB(root='./data', split='test', download=True,
-transform=transform)
+test_set = torchvision.datasets.GTSRB(root='./data', split='test', download=True, transform=transform)
 test_loader = DataLoader(test_set, batch_size=64, shuffle=False)
 
 correct = 0
@@ -48,5 +47,5 @@ with torch.no_grad():
         _, predicted = torch.max(outputs.data, 1)
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
-print(f'Accuracy of the model on the test images: {100 * correct / total:.2f}%')
 
+print(f'Accuracy of the model on the test images: {100 * correct / total:.2f}%')

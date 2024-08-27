@@ -13,12 +13,10 @@ transform = transforms.Compose([
 ])
 
 # Load the GTSRB dataset
-train_set = torchvision.datasets.GTSRB(root='./data', split='train',
-download=True, transform=transform)
+train_set = torchvision.datasets.GTSRB(root='./data', split='train', download=True, transform=transform)
 train_loader = DataLoader(train_set, batch_size=64, shuffle=True)
 
-test_set = torchvision.datasets.GTSRB(root='./data', split='test',
-download=True, transform=transform)
+test_set = torchvision.datasets.GTSRB(root='./data', split='test', download=True, transform=transform)
 test_loader = DataLoader(test_set, batch_size=64, shuffle=False)
 
 
