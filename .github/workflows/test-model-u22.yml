@@ -1,10 +1,9 @@
 name: Test Model u22
 
 on:
-  workflow_run:
-    workflows: ["Train Model"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
 
 jobs:
   test-model:
