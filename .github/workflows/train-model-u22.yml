@@ -8,25 +8,16 @@ on:
 jobs:
   train-model:
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
+    container: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
     name: Train the Model
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Install pip
-        run: |
-          echo "install pip3"
-          sudo apt-get install python3-pip
-      
-      - name: Install dependencies
-        run: |
-          echo "install torch"
-          pip install torch==2.4.0 torchvision==0.15.0
-
-#      - name: Create folder
-#        run: |
-#          echo "Create models folder"
-#          mkdir scripts/models
-
-      - name: Run training script
-        run: python scripts/train_model.py
+    # approach
+      - name: Run the build process with Docker
+        uses: addnab/docker-run-action@v3
+        with:
+          image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
+          options: -v ${{ github.workspace }}:/home/ubuntu
+          run: |
+            python ./scripts/train_model.py

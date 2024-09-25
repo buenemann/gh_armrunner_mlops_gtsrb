@@ -3,6 +3,7 @@ import torch.nn as nn
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 import torchvision
+from torch.profiler import profile, record_function, ProfilerActivity
 
 class TrafficSignNet(nn.Module):
     def __init__(self):
@@ -43,9 +44,12 @@ total = 0
 with torch.no_grad():
     for data in test_loader:
         images, labels = data
-        outputs = model(images)
+        with profile(activities=[ProfilerActivity.CPU], record_shapes=True) as prof:
+            with record_function("model_inference"):
+                outputs = model(images)
         _, predicted = torch.max(outputs.data, 1)
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
 
 print(f'Accuracy of the model on the test images: {100 * correct / total:.2f}%')
+print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
