@@ -8,7 +8,9 @@ on:
 jobs:
   train-model:
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
-    container: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
+    container:
+      image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
+      options: --user 1001
     name: Train the Model
     steps:
       - name: Checkout code
