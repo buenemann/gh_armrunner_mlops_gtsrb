@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
-      options: --user 1001
+      options: --user 1000
     name: Train the Model
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Install pip
-        run: apt-get install python3-pip
+        run: sudo apt-get install python3-pip
       - name: Install dependencies
         run: pip install torch==2.4.0 torchvision==0.15.0
       - name: Run training script
