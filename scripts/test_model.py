@@ -1,3 +1,4 @@
+import argparse
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
@@ -23,9 +24,17 @@ class TrafficSignNet(nn.Module):
         x = self.fc2(x)
         return x
 
+parser = argparse.ArgumentParser()
+parser.add_argument('-m', '--model', type=str,
+                    help='Model file path')
+
+args = parser.parse_args()
+
+model_path = args.model if args.model else './models/traffic_sign_net.pth'
+
 # Load the model
 model = TrafficSignNet()
-model.load_state_dict(torch.load('./models/traffic_sign_net.pth'))
+model.load_state_dict(torch.load(model_path))
 model.eval()
 
 # Define transformations for the testing data

@@ -19,7 +19,12 @@ jobs:
         run: pip install torch==2.4.0 torchvision==0.15.0
       - name: Run training script
         run: python scripts/train_test_compare.py
-
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: traffic_sign_net
+          path: ${{ github.workspace }}/models/traffic_sign_net.pth
+          retention-days: 5
         # approach
     #  - name: Run the build process with Docker
     #    uses: addnab/docker-run-action@v3
