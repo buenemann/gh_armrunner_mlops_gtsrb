@@ -15,9 +15,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4 # Latest version
-      - name: Install dependencies
-        run: |
-          pip install torch==2.4.0 torchvision==0.15.0
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
