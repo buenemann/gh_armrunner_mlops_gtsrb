@@ -2,7 +2,7 @@ name: Deploy to Azure Container Apps
 
 on:
   workflow_run:
-    workflows: ["Test Model"]
+    workflows: [Test Model]
     types:
       - completed
 
@@ -26,7 +26,7 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           docker buildx build --platform linux/arm64 -t your-username/your-image-name:latest --push .
-  
+
   deploy-to-azure:
     runs-on: ubuntu-22.04
     needs: deploy-to-dockerhub

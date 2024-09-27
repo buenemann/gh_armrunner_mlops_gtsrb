@@ -1,32 +1,17 @@
 name: Reduced epoch training and test comparision
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   train-model:
+    name: Run comparison script
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
-    name: Train the Model
+    container:
+      image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-onednn-acl
+      options: --user root
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Install pip
-        run: |
-          echo "install pip3"
-          sudo apt-get install python3-pip
-      
-      - name: Install dependencies
-        run: |
-          echo "install torch"
-          pip install torch==2.4.0 torchvision==0.15.0
-
-#      - name: Create folder
-#        run: |
-#          echo "Create models folder"
-#          mkdir scripts/models
-
       - name: Run training script
         run: python scripts/train_test_compare.py
