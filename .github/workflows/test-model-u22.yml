@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
-      options: --user 1001
+      options: --user root
     name: Test the Model
     steps:
       - name: Checkout code
