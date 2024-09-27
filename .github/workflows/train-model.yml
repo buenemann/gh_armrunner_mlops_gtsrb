@@ -1,13 +1,14 @@
-name: Train Model u22
+name: Train Model
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
 
 jobs:
   train-model:
-    name: Train the Model
+    name: Train the model
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
@@ -17,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Run training script
         run: python scripts/train_model.py
-      - name: 'Upload Artifact'
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: traffic_sign_net

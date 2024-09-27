@@ -1,17 +1,22 @@
-name: Test Model u22
+name: Test Model
 
 on:
+  workflow_run:
+    workflows: [Train Model]
+    types:
+      - completed
   push:
     branches:
       - main
 
 jobs:
   test-model:
+    name: Test the Model
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
       options: --user root
-    name: Test the Model
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4 # Latest version
