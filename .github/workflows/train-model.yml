@@ -2,9 +2,6 @@ name: Train Model
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
   train-model:
