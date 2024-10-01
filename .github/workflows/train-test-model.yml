@@ -1,0 +1,53 @@
+name: Train and Test the Model with two different backends
+
+on:
+  workflow_dispatch:
+
+jobs:
+  train-model:
+    name: Train the model and upload as artifact
+    runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
+    container:
+      image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
+      options: --user root
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run training script
+        run: python scripts/train_model.py
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: traffic_sign_net
+          path: ${{ github.workspace }}/models/traffic_sign_net.pth
+          retention-days: 30
+  test-model-openblas:
+    name: Test the model with OpenBLAS
+    runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
+    container:
+      image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
+      options: --user root
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: traffic_sign_net
+      - name: Test with OpenBLAS
+        run: python scripts/test_model.py --model traffic_sign_net.pth
+  test-model-onednn-acl:
+    name: Test the model with oneDNN and Arm Compute Library
+    runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
+    container:
+      image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-onednn-acl
+      options: --user root
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: traffic_sign_net
+      - name: Test with oneDNN and Arm Compute Library
+        run: python scripts/test_model.py --model traffic_sign_net.pth

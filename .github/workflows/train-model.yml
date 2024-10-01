@@ -20,4 +20,4 @@ jobs:
         with:
           name: traffic_sign_net
           path: ${{ github.workspace }}/models/traffic_sign_net.pth
-          retention-days: 30
+          retention-days: 5
