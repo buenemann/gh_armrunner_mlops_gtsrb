@@ -1,6 +1,7 @@
-name: Deploy to Azure Container Apps
+name: Deploy to DockerHub
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: [Test Model]
     types:
