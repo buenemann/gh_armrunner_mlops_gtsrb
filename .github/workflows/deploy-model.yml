@@ -25,25 +25,4 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker buildx build --platform linux/arm64 -t your-username/your-image-name:latest --push .
-
-  deploy-to-azure:
-    runs-on: ubuntu-22.04
-    needs: deploy-to-dockerhub
-    name: Deploy to Azure Container Apps
-    steps:
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Deploy to Azure Container Apps
-        run: |
-          az containerapp create  --name your-container-app-name \
-                                  --resource-group your-resource-group \
-                                  --image your-username/your-image-name:latest \
-                                  --environment your-env-name \
-                                  --cpu 0.5 --memory 1.0Gi \
-                                  --ingress 'external' --target-port 8000 \
-                                  --query "properties.configuration.ingress.fqdn"
-
+          docker buildx build --platform linux/arm64 -t ${{ secrets.DOCKER_USERNAME }}/gtsrb-image:latest --push .
