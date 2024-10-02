@@ -2,10 +2,6 @@ name: Test Model
 
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: [Train Model]
-    types:
-      - completed
 
 jobs:
   test-model:
@@ -14,10 +10,9 @@ jobs:
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
       options: --user root
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Latest version
+        uses: actions/checkout@v4
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
