@@ -36,7 +36,7 @@ jobs:
         with:
           name: traffic_sign_net
       - name: Test with OpenBLAS
-        run: python scripts/test_model.py --model models/traffic_sign_net.pth > openblas.txt
+        run: python scripts/test_model.py --model models/traffic_sign_net.pth | tee openblas.txt
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -58,7 +58,7 @@ jobs:
         with:
           name: traffic_sign_net
       - name: Test with oneDNN and Arm Compute Library
-        run: python scripts/test_model.py --model models/traffic_sign_net.pth > acl.txt
+        run: python scripts/test_model.py --model models/traffic_sign_net.pth | tee acl.txt
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:

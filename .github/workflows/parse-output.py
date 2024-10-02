@@ -22,4 +22,5 @@ print("                         ------------------  Arm Compute Library results 
 print(acl)
 print("\n")
 print("                         ------------------  Self CPU time total change   ------------------")
-print(f"Self CPU time total went from {openblas_cpu_time_total} (OpenBLAS) to {acl_cpu_time} (ACL): {(float(acl_cpu_time)/float(openblas_cpu_time))*100:.2f}% change")
+print(f"Self CPU time total went from {openblas_cpu_time_total} (OpenBLAS) to {acl_cpu_time} (ACL): \
+      {abs((float(acl_cpu_time)-float(openblas_cpu_time))/float(openblas_cpu_time))*100:.2f}% change")
