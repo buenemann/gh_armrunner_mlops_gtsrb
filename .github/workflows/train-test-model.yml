@@ -24,28 +24,18 @@ jobs:
           retention-days: 5
   test-model-openblas:
     name: Test with OpenBLAS
-    #needs: train-model
+    needs: train-model
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
-    outputs:
-      openblas: ${{ steps.test-openblas.outputs.openblas_output }}
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
       options: --user root
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      #- name: Download model artifact
-      #  uses: actions/download-artifact@v4
-      #  with:
-      #    name: traffic_sign_net
-      #- name: Test with OpenBLAS
-      #  id: test-openblas
-      #  run: |
-      #    {
-      #    echo 'openblas_output<<EOF'
-      #    python scripts/test_model.py --model models/traffic_sign_net.pth
-      #    echo EOF
-      #    } >> "$GITHUB_OUTPUT"
+      - name: Download model artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: traffic_sign_net
       - name: Test with OpenBLAS
         run: python scripts/test_model.py --model models/traffic_sign_net.pth > openblas.txt
       - name: Upload Artifact
@@ -56,28 +46,18 @@ jobs:
           retention-days: 5
   test-model-onednn-acl:
     name: Test with Arm Compute Library
-    #needs: train-model
+    needs: train-model
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
-    outputs:
-      acl: ${{ steps.test-acl.outputs.acl }}
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-onednn-acl
       options: --user root
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      #- name: Download model artifact
-      #  uses: actions/download-artifact@v4
-      #  with:
-      #    name: traffic_sign_net
-      #- name: Test with oneDNN and Arm Compute Library
-      #  id: test-acl
-      #  run: |
-      #    {
-      #    echo 'acl_output<<EOF'
-      #    python scripts/test_model.py --model models/traffic_sign_net.pth
-      #    echo EOF
-      #    } >> "$GITHUB_OUTPUT"
+      - name: Download model artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: traffic_sign_net
       - name: Test with oneDNN and Arm Compute Library
         run: python scripts/test_model.py --model models/traffic_sign_net.pth > acl.txt
       - name: Upload Artifact
@@ -89,8 +69,7 @@ jobs:
   compare-results:
     name: Compare the two profiler reports
     needs: [test-model-openblas, test-model-onednn-acl]
-    #runs-on: ubuntu-22.04-arm-os
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04-arm-os
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
