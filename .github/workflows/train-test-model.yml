@@ -67,5 +67,7 @@ jobs:
     needs: [test-model-openblas, test-model-onednn-acl]
     runs-on: ubuntu-22.04-arm-os
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Parse output
         run: python .github/workflows/parse-output.py ${{ steps.test-openblas.outputs.OUTPUT }} ${{ steps.test-acl.outputs.OUTPUT }}
