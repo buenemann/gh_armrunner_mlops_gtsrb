@@ -34,10 +34,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Download model artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: traffic_sign_net
+      #- name: Download model artifact
+      #  uses: actions/download-artifact@v4
+      #  with:
+      #    name: traffic_sign_net
       - name: Test with OpenBLAS
         id: test-openblas
         run: |
@@ -54,10 +54,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Download model artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: traffic_sign_net
+      #- name: Download model artifact
+      #  uses: actions/download-artifact@v4
+      #  with:
+      #    name: traffic_sign_net
       - name: Test with oneDNN and Arm Compute Library
         id: test-acl
         run: |
