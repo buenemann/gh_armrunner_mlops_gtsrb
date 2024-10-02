@@ -66,6 +66,8 @@ jobs:
           python scripts/test_model.py --model models/traffic_sign_net.pth
           echo 'EOF'
           } >> "$GITHUB_ENV"
+      - name: Echo env
+        run: echo ${{ env }}
   compare-results:
     name: Compare the two profiler reports
     needs: [test-model-openblas, test-model-onednn-acl]
