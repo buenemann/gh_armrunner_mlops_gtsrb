@@ -25,8 +25,6 @@ jobs:
   test-model-openblas:
     name: Test with OpenBLAS
     #needs: train-model
-    outputs:
-      output: ${{ env.openblas_output }}
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
@@ -40,17 +38,10 @@ jobs:
       #    name: traffic_sign_net
       - name: Test with OpenBLAS
         id: test-openblas
-        run: |
-          {
-          echo 'openblas_output<<EOF'
-          python scripts/test_model.py --model models/traffic_sign_net.pth
-          echo 'EOF'
-          } >> "$GITHUB_ENV"
+        run: echo "{openblas_output}={python scripts/test_model.py --model models/traffic_sign_net.pth}" >> "$GITHUB_OUTPUT"
   test-model-onednn-acl:
     name: Test with Arm Compute Library
     #needs: train-model
-    outputs:
-      output: ${{ env.acl_output }}
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-onednn-acl
@@ -64,12 +55,7 @@ jobs:
       #    name: traffic_sign_net
       - name: Test with oneDNN and Arm Compute Library
         id: test-acl
-        run: |
-          {
-          echo 'acl_output<<EOF'
-          python scripts/test_model.py --model models/traffic_sign_net.pth
-          echo 'EOF'
-          } >> "$GITHUB_ENV"
+        run: echo "{acl_output}={python scripts/test_model.py --model models/traffic_sign_net.pth}" >> "$GITHUB_OUTPUT"
   compare-results:
     name: Compare the two profiler reports
     needs: [test-model-openblas, test-model-onednn-acl]
@@ -78,6 +64,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Echo env
-        run: echo ${{ env }}
+        run: echo ${{ steps.test-acl.outputs.acl_output }}
       - name: Parse output
-        run: python .github/workflows/parse-output.py ${{ steps.test-openblas.outputs.output }} ${{ steps.test-acl.outputs.output }}
+        run: python .github/workflows/parse-output.py ${{ steps.test-openblas.outputs.openblas_output }} ${{ steps.test-acl.outputs.acl_output }}
