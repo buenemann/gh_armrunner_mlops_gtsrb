@@ -1,6 +1,10 @@
 import sys
-openblas = sys.argv[1]
-acl = sys.argv[2]
+
+with open(sys.argv[1]) as openblas_fn:
+    openblas = openblas_fn.read()
+
+with open(sys.argv[2]) as acl_fn:
+    acl = acl_fn.read()
 
 results_sep = "---------------------------------------------------------"
 openblas = openblas.split(results_sep, 1)[-1]
