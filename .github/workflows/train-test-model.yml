@@ -5,7 +5,6 @@ on:
 
 jobs:
   train-model:
-    if: false
     name: Train the model
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
     container:
