@@ -39,7 +39,7 @@ jobs:
       - name: Test with OpenBLAS
         id: test-openblas
         run: |
-          echo "::set-output name=OUTPUT::$(
+          echo "OUTPUT=$(
           python scripts/test_model.py --model models/traffic_sign_net.pth
           )"
   test-model-onednn-acl:
@@ -59,7 +59,7 @@ jobs:
       - name: Test with oneDNN and Arm Compute Library
         id: test-acl
         run: |
-          echo "::set-output name=OUTPUT::$(
+          echo "OUTPUT=$(
           python scripts/test_model.py --model models/traffic_sign_net.pth
           )"
   compare-results:
