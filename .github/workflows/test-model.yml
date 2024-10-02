@@ -26,4 +26,3 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run testing script
         run: python scripts/test_model.py --model traffic_sign_net.pth
-

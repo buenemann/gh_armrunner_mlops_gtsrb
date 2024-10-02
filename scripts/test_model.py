@@ -60,5 +60,6 @@ with torch.no_grad():
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
 
+print("---------------------------------------------------------")
 print(f'Accuracy of the model on the test images: {100 * correct / total:.2f}%')
 print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))

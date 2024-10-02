@@ -25,6 +25,7 @@ jobs:
     name: Test with OpenBLAS
     needs: train-model
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
+    outputs: ${{ steps.test-openblas.outputs }}
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
       options: --user root
@@ -36,11 +37,13 @@ jobs:
         with:
           name: traffic_sign_net
       - name: Test with OpenBLAS
-        run: python scripts/test_model.py --model traffic_sign_net.pth
+        id: test-openblas
+        run: python scripts/test_model.py --model traffic_sign_net.pth >> $GITHUB_OUTPUT
   test-model-onednn-acl:
     name: Test with Arm Compute Library
     needs: train-model
     runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
+    outputs: ${{ steps.test-acl.outputs }}
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-onednn-acl
       options: --user root
@@ -52,4 +55,12 @@ jobs:
         with:
           name: traffic_sign_net
       - name: Test with oneDNN and Arm Compute Library
-        run: python scripts/test_model.py --model traffic_sign_net.pth
+        id: test-acl
+        run: python scripts/test_model.py --model traffic_sign_net.pth >> $GITHUB_OUTPUT
+  compare-results:
+    name: Compare the two profiler reports
+    needs: [test-model-openblas, test-model-onednn-acl]
+    runs-on: ubuntu-22.04-arm-os
+    steps:
+      - name: Parse output
+        run: python .github/workflows/parse-output.py ${{ steps.test-openblas.outputs }} ${{ steps.test-acl.outputs }}
