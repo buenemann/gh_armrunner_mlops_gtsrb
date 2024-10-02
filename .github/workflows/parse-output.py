@@ -1,5 +1,5 @@
 import sys
-
+# Parse two files containing the profiler report. Display the report and compare the performance uplift.
 with open(sys.argv[1]) as openblas_fn:
     openblas = openblas_fn.read()
 
