@@ -24,7 +24,7 @@ jobs:
   test-model-openblas:
     name: Test with OpenBLAS
     needs: train-model
-    runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
+    runs-on: ubuntu-22.04-arm-os
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
       options: --user root
@@ -46,7 +46,7 @@ jobs:
   test-model-onednn-acl:
     name: Test with Arm Compute Library
     needs: train-model
-    runs-on: ubuntu-22.04-arm-os # Custom ARM64 runner
+    runs-on: ubuntu-22.04-arm-os
     container:
       image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-onednn-acl
       options: --user root
@@ -84,7 +84,6 @@ jobs:
         run: python .github/workflows/parse-output.py openblas.txt acl.txt
   deploy-to-dockerhub:
     name: Build and Push Docker Image to DockerHub
-    needs: [test-model-onednn-acl]
     runs-on: ubuntu-22.04-arm-os
     steps:
       - name: Checkout code
