@@ -84,6 +84,7 @@ jobs:
         run: python .github/workflows/parse-output.py openblas.txt acl.txt
   deploy-to-dockerhub:
     name: Build and Push Docker Image to DockerHub
+    needs: compare-results
     runs-on: ubuntu-22.04-arm-os
     steps:
       - name: Checkout code
