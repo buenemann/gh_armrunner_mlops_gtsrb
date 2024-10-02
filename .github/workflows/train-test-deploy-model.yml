@@ -1,4 +1,4 @@
-name: Train and compare tests
+name: Train, Test and Deploy Model
 
 on:
   workflow_dispatch:
