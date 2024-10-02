@@ -44,8 +44,6 @@ jobs:
           python scripts/test_model.py --model models/traffic_sign_net.pth
           echo EOF
           } >> "$GITHUB_OUTPUT"
-      - name: Echo output
-        run: echo ${{ steps.test-openblas.outputs.openblas_output }}
   test-model-onednn-acl:
     name: Test with Arm Compute Library
     #needs: train-model
@@ -68,8 +66,6 @@ jobs:
           python scripts/test_model.py --model models/traffic_sign_net.pth
           echo EOF
           } >> "$GITHUB_OUTPUT"
-      - name: Echo output
-        run: echo ${{ steps.test-acl.outputs.acl_output }}
   compare-results:
     name: Compare the two profiler reports
     needs: [test-model-openblas, test-model-onednn-acl]
@@ -77,7 +73,5 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Echo env
-        run: echo ${{ steps.test-acl.outputs.acl_output }} ${{ steps.test-openblas.outputs.openblas_output }}
       - name: Parse output
         run: python .github/workflows/parse-output.py ${{ steps.test-openblas.outputs.openblas_output }} ${{ steps.test-acl.outputs.acl_output }}
