@@ -1,6 +1,7 @@
 import torch
 import torchvision.transforms as transforms
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.responses import JSONResponse
 from PIL import Image
 import io
 
@@ -57,7 +58,10 @@ async def predict(file: UploadFile = File(...)):
 
         # Return the prediction
         return {"predicted_class": predicted.item()}
-    
+
+       # Return the prediction as a JSON response
+        return JSONResponse(content={"prediction": prediction.tolist()})
+        
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
