@@ -9,7 +9,7 @@ COPY models/ /app/models/
 COPY scripts/ /app/scripts/
 
 # Install any additional dependencies
-RUN pip install --no-cache-dir torch torchvision fastapi uvicorn
+RUN pip install --no-cache-dir torch torchvision fastapi uvicorn python-multipart
 
 # Expose the port the app will run on
 EXPOSE 8000
