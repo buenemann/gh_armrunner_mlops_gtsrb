@@ -23,13 +23,6 @@ jobs:
           name: traffic_sign_net
           path: ${{ github.workspace }}/models/traffic_sign_net.pth
           retention-days: 5
-      - name: Push updated model to repository
-        run: |
-          git config --global user.name "GitHub Actions User"
-          git config --global user.email "username@users.noreply.github.com"
-          git add models/traffic_sign_net.pth
-          git commit -m "Add updated model"
-          git push
   test-model-openblas:
     name: Test with OpenBLAS
     needs: train-model
@@ -93,6 +86,25 @@ jobs:
         run: python scripts/parse_output.py openblas.txt acl.txt
       - name: Remove output files
         run: rm -rf openblas.txt acl.txt
+  push-artifact:
+    name: Push the updated model
+    needs: [compare-results]
+    runs-on: ubuntu-22.04-arm-os
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Download model artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: traffic_sign_net
+          path: models/
+      - name: Push updated model to repository
+        run: |
+          git config --global user.name "GitHub Actions User"
+          git config --global user.email "username@users.noreply.github.com"
+          git add models/traffic_sign_net.pth
+          git commit -m "Add updated model"
+          git push
   deploy-to-dockerhub:
     name: Build and Push Docker Image to DockerHub
     needs: compare-results
