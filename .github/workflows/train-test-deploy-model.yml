@@ -2,6 +2,8 @@ name: Train, Test and Deploy Model
 
 on:
   workflow_dispatch:
+  push:
+    branches: main
 
 jobs:
   train-model:
@@ -81,7 +83,7 @@ jobs:
         with:
           name: acl
       - name: Parse output
-        run: python .github/workflows/parse-output.py openblas.txt acl.txt
+        run: python scripts/parse_output.py openblas.txt acl.txt
   deploy-to-dockerhub:
     name: Build and Push Docker Image to DockerHub
     needs: compare-results
