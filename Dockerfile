@@ -7,6 +7,7 @@ WORKDIR /app
 # Copy the necessary files
 COPY models/ /app/models/
 COPY scripts/ /app/scripts/
+COPY test-img.png /app/
 
 # Install any additional dependencies
 RUN pip install --no-cache-dir torch torchvision fastapi uvicorn python-multipart
