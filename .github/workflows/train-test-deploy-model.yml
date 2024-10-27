@@ -2,8 +2,6 @@ name: Train, Test and Deploy Model
 
 on:
   workflow_dispatch:
-  push:
-    branches: main
 
 jobs:
   train-model:
