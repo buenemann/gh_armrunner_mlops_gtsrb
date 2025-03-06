@@ -6,9 +6,9 @@ on:
 jobs:
   train-model:
     name: Train the Model
-    runs-on: self-hosted # ubuntu-22.04-arm-os # Custom ARM64 runner
+    runs-on: self-hosted
     container:
-      image: armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
+      image: ubuntu-latest # armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
       options: --user root
     steps:
       - name: Checkout code
