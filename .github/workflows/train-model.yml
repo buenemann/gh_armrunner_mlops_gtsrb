@@ -11,6 +11,10 @@ jobs:
       image: ubuntu:latest # armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
       options: --user root
     steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Install dependencies
