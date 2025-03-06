@@ -16,7 +16,8 @@ jobs:
       - name: Set up Python
         run: | 
           apt update
-          apt install python3 python-is-python3
+          apt -y upgrade
+          apt -y install python3 python-is-python3
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Install dependencies
