@@ -8,24 +8,25 @@ jobs:
     name: Train the Model
     runs-on: self-hosted
     container:
-      image: ubuntu:latest 
+      # image: ubuntu:latest 
+      image: pytorch/pytorch
       # image: ubuntu/python:3.12-24.04_stable
       # image: ubuntu:latest # armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
       options: --user root
     steps:
-      - name: Set up Python
-        run: | 
-          apt update
-          apt -y upgrade
-          apt -y install python3 python3-pip python-is-python3 python3-venv
+      # - name: Set up Python
+      #  run: | 
+      #    apt update
+      #    apt -y upgrade
+      #    apt -y install python3 python3-pip python-is-python3 python3-venv
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Install dependencies
-        run: | 
-          python -m venv .venv
-          . .venv/bin/activate
-          # python -m pip install --upgrade pip
-          pip install -r requirements.txt
+      # - name: Install dependencies
+      #  run: | 
+          # python -m venv .venv
+      #    . .venv/bin/activate
+      #    # python -m pip install --upgrade pip
+      #    pip install -r requirements.txt
       - name: Run training script
         run: python scripts/train_model.py
       - name: Upload Artifact
