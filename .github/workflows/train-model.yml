@@ -8,14 +8,15 @@ jobs:
     name: Train the Model
     runs-on: self-hosted
     container:
-      image: ubuntu/python:3.12-24.04_stable
+      image: ubuntu:latest 
+      # image: ubuntu/python:3.12-24.04_stable
       # image: ubuntu:latest # armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
       options: --user root
     steps:
-      # - name: Set up Python
-      #   uses: actions/setup-python@v5
-      #   with:
-      #     python-version: "3.11"
+      - name: Set up Python
+        run: | 
+          apt update
+          apt install python
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Install dependencies
