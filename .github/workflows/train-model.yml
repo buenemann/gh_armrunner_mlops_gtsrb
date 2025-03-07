@@ -10,8 +10,6 @@ jobs:
     container:
       # image: ubuntu:latest 
       image: pytorch/pytorch
-      # image: ubuntu/python:3.12-24.04_stable
-      # image: ubuntu:latest # armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-openblas
       options: --user root
     steps:
       # - name: Set up Python
@@ -23,9 +21,8 @@ jobs:
         uses: actions/checkout@v4
       # - name: Install dependencies
       #  run: | 
-          # python -m venv .venv
+      #    python -m venv .venv
       #    . .venv/bin/activate
-      #    # python -m pip install --upgrade pip
       #    pip install -r requirements.txt
       - name: Run training script
         run: python scripts/train_model.py
