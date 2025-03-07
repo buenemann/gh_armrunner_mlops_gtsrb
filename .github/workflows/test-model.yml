@@ -21,8 +21,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: traffic_sign_net
-          run-id: 11331644497
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # run-id: 11331644497
+          # github-token: ${{ secrets.GITHUB_TOKEN }}
       # - name: Install dependencies
       #   run: | 
       #     python -m pip install --upgrade pip
