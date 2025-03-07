@@ -22,7 +22,7 @@ jobs:
         with:
           name: traffic_sign_net
           run-id: 13714691477
-          # github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       # - name: Install dependencies
       #   run: | 
       #     python -m pip install --upgrade pip
