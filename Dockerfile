@@ -1,5 +1,6 @@
 # Use the official PyTorch image as the base image
-FROM armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-onednn-acl
+# FROM armswdev/pytorch-arm-neoverse:r24.07-torch-2.3.0-onednn-acl
+FROM python:latest
 
 # Set the working directory
 WORKDIR /app
