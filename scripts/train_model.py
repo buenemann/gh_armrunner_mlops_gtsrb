@@ -15,10 +15,13 @@ transform = transforms.Compose(
 )
 
 # Load the GTSRB dataset
+print('Read Data')
 train_set = torchvision.datasets.GTSRB(
     root="./data", split="train", download=True, transform=transform
 )
-train_loader = DataLoader(train_set, batch_size=64, shuffle=True)
+
+print('Preparing Data Loader')
+train_loader = DataLoader(train_set, batch_size=1, shuffle=True)
 
 
 class TrafficSignNet(nn.Module):
@@ -39,6 +42,7 @@ class TrafficSignNet(nn.Module):
         x = self.fc2(x)
         return x
 
+print("Create Model")
 
 # Instantiate the model, loss function, and optimizer
 model = TrafficSignNet()
